@@ -47,6 +47,12 @@ jobs:
             aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
             aws-region: us-east-1
 
+        - name: Build and package application
+          run: |
+            # Comandos para construir y empaquetar tu aplicación
+            # Por ejemplo, podrías crear un archivo ZIP de tu código fuente
+            zip -r deploy.zip .
+
         - name: Deploy to Elastic Beanstalk
           uses: einaregilsson/beanstalk-deploy@v18
           with:
@@ -57,3 +63,4 @@ jobs:
             environment_name: pro-JBRHDO-08masw
             region: us-east-1
             version_label: ${{ github.sha }}
+            file: deploy.zip
