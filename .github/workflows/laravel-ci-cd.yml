@@ -24,6 +24,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Generate unique version label
+        id: generate_version
+        run: echo "VERSION_LABEL=$(date +%s)-${GITHUB_SHA}" >> $GITHUB_ENV
+
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -61,6 +65,6 @@ jobs:
             aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             application_name: flarum
             environment_name: pro-JBRHDO-08masw
-            version_label: 9cc9f2b7c4fc91e2019bf04ea3003a4aae36d1f7
+            version_label: ${{ env.VERSION_LABEL }}
             region: us-east-1
             deployment_package: deploy.zip
