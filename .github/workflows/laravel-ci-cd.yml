@@ -47,16 +47,19 @@ jobs:
             aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
             aws-region: us-east-1
 
+        - name: Checkout code
+          uses: actions/checkout@v2
+
+        - name: Generate deployment package
+          run: zip -r deploy.zip .
+
         - name: Deploy to Elastic Beanstalk
           uses: einaregilsson/beanstalk-deploy@v18
           with:
             aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
             aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            aws_session_token: ${{ secrets.AWS_SESSION_TOKEN }}
             application_name: flarum
             environment_name: pro-JBRHDO-08masw
+            version_label: 9cc9f2b7c4fc91e2019bf04ea3003a4aae36d1f7
             region: us-east-1
-            version_label: ${{ github.sha }}
-            script: |
-              cd /var/www/html
-              git pull origin develop
+            deployment_package: deploy.zip
