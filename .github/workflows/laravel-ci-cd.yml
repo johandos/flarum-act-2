@@ -51,7 +51,7 @@ jobs:
           run: |
             # Comandos para construir y empaquetar tu aplicación
             # Por ejemplo, podrías crear un archivo ZIP de tu código fuente
-            zip -r deploy.zip .
+            zip -r ./deploy.zip ./
 
         - name: Deploy to Elastic Beanstalk
           uses: einaregilsson/beanstalk-deploy@v18
@@ -63,4 +63,4 @@ jobs:
             environment_name: pro-JBRHDO-08masw
             region: us-east-1
             version_label: ${{ github.sha }}
-            file: deploy.zip
+            file: ./deploy.zip
