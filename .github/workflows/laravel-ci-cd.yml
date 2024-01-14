@@ -24,10 +24,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Generate unique version label
-        id: generate_version
-        run: echo "VERSION_LABEL=$(date +%s)-${GITHUB_SHA}" >> $GITHUB_ENV
-
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -51,6 +47,10 @@ jobs:
             aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
             aws-region: us-east-1
+
+        - name: Generate unique version label
+          id: generate_version
+          run: echo "VERSION_LABEL=$(date +%s)-${GITHUB_SHA}" >> $GITHUB_ENV
 
         - name: Checkout code
           uses: actions/checkout@v2
